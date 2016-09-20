@@ -1,0 +1,110 @@
+<div class="container sched_content" style="margin-top: 30px;">
+
+  <!-- Schedule content -->
+  <div ng-show="ctr.overlayPage == 0">
+
+  	<!-- CONTENT HEADER -->
+  	<div class="row-hd wid-mob" ng-show="!ctr.order.deliveryTimeWindow">
+  		<h1 class="hd-1"><b>Reserve a delivery time</b></h1>
+    	<h4 class="hd-2">When would you like Distrib to come?</h4>
+  	</div>
+    <div class="row-hd wid-mob" ng-show="ctr.order.deliveryTimeWindow">
+      <h1 class="hd-1"><b>Reschedule a delivery time</b></h1>
+      <h4 class="hd-2">
+        You are currently scheduled for {{ctr.order.deliveryTimeWindow.startTime | date: 'fullDate'}} between {{ctr.order.deliveryTimeWindow.startTime | date: 'h:mm a'}} and {{ctr.order.deliveryTimeWindow.endTime | date: 'h:mm a'}}</h4>
+      </div>
+  	<div class="loader" ng-show="!ctr.schedData">Loading...</div>
+
+    <!-- CHOOSE DATE BUTTONS -->
+    <div class="row-dt wid-mob"> 
+      <label ng-repeat="(day, times) in ctr.schedData" class="btn btn-default btn-lg btn-dt" ng-model="ctr.selectedTime.date" uib-btn-radio="day">
+      <b>
+      {{(times.Morning[0].startTime | date : 'EEEE') || (times.Afternoon[0].startTime | date : 'EEEE') || (times.Evening[0].startTime | date : 'EEEE')}}
+      <br>
+      <font size="200%">
+        {{(times.Morning[0].startTime | date : 'd') || (times.Afternoon[0].startTime | date : 'd') || (times.Evening[0].startTime | date : 'd')}}
+      </font>
+    </b>
+    </label>
+  	</div>
+
+    <!-- CHOOSE PERIOD BUTTONS -->
+    <div class="row-pd" ng-show="ctr.selectedTime.date">
+      <label ng-repeat="(period, times) in ctr.schedData[ctr.selectedTime.date]" class="btn btn-default btn-lg btn-gp" ng-model="ctr.selectedTime.period" uib-btn-radio="period">
+      <b>{{period}}</b></label>
+	  </div>
+
+    <!-- CHOOSE TIME BUTTONS -->
+    <div class="row-tm wid-mob" ng-show="ctr.selectedTime.period">
+    	<label ng-repeat="time in ctr.schedData[ctr.selectedTime.date][ctr.selectedTime.period]" class="btn btn-default btn-lg btn-tm" ng-model="ctr.selectedTime.time" uib-btn-radio="time" ng-disabled="!time.available">
+    	{{time.startTime | date: 'h:mm a'}} to {{ time.endTime | date: 'h:mm a'}}</label>
+    </div>
+
+  </div>
+		<!-- Schedule content end -->
+
+ 	<!-- Confirm content -->
+  <div ng-show="ctr.overlayPage == 1">
+
+  	<!-- CONTENT HEADER -->
+  	<div class="row-hd wid-mob">
+  		<h1 class="hd-1"><b>Specify delivery options</b></h1>
+    	<h4 class="hd-2">You will be scheduled for {{ctr.selectedTime.time.startTime | date: 'fullDate'}}. We may show up at any time between {{ctr.selectedTime.time.startTime | date: 'h:mm a'}} and {{ ctr.selectedTime.time.endTime | date: 'h:mm a'}}</h4>
+  	</div>
+
+  	<!-- DELIVERY CONTACT BUTTON GROUP -->
+  	<div class="row-pd wid-mob">
+      <div class="btn-group btn-group-lg" style="text-transform:capitalize;">
+	      <label ng-repeat="(method, data) in ctr.delivData.contact" class="btn btn-default btn-gp" ng-model="ctr.delivData.contact[method]" uib-btn-checkbox>
+	      <b>{{method}}</b></label>
+	  	</div>
+	  </div>
+
+  	<!-- CONTACT INFO -->
+    <div class="well well-sm well-co wid-mob" ng-show="ctr.delivData.contact.knock || ctr.delivData.contact.doorbell || ctr.delivData.contact.phone || ctr.delivData.contact.other">
+      <p><b>When the driver arrives they will:</b></p>
+    	<!-- DELIVERY CONTACT OPTIONS TEXT -->
+			<p ng-show="ctr.delivData.contact.knock">&bull; Attempt to knock on your door</p>
+			<p ng-show="ctr.delivData.contact.doorbell">&bull; Ring your doorbell</p>
+			<p ng-show="ctr.delivData.contact.phone">&bull; Attempt to call you at:
+        <input ng-show="ctr.delivData.contact.phone" type="text" class="form-control input-sm" placeholder="Enter phone number..." ng-model="ctr.delivData.phoneNum">
+      </p>
+			<p ng-show="ctr.delivData.contact.other">&bull; Follow special instructions/requests:
+        <textarea ng-show="ctr.delivData.contact.other" maxlength="350" class="form-control input-sm textarea" placeholder="Enter special instructions (i.e. Apt Buzzer #)..." rows="2" ng-model="ctr.delivData.note"></textarea>
+      </p>
+			<hr style="margin: 15px">
+			<!-- SAFEDROP AND TERMS AND CONDITIONS -->
+			<p uib-popover="Receive text message alerts for delivery status and ETA's" popover-trigger="mouseenter" popover-placement="top-right">
+        <input type="checkbox" ng-model="ctr.delivData.smsUpdates"> SMS Delivery Updates 
+        <input ng-show="ctr.delivData.smsUpdates" type="text" class="form-control input-sm" placeholder="Enter SMS number..." ng-model="ctr.delivData.smsNum">
+      </p>
+			<p uib-popover="Allow safedrop if I am unavailable when driver arrives" popover-trigger="mouseenter" popover-placement="top-right">
+        <input type="checkbox" ng-model="ctr.delivData.safedrop"> Allow <a href="javascript:window.open('https://www.kuromarket.com/pages/delivery-policy','delivery','width=600,height=400')">safe drop</a> if I am unavailable
+      </p>
+			<p uib-popover="Please accept our delivery terms and conditions to confirm delivery" popover-trigger="mouseenter" popover-placement="top-right">
+        <input type="checkbox" ng-model="ctr.delivData.terms"> I have read and accept the <a href="javascript:window.open('https://www.kuromarket.com/pages/delivery-policy','delivery','width=600,height=400')">Terms and Conditions</a> for delivery
+      </p>
+		</div>
+
+	</div>
+	<!-- Confirm content end-->
+
+	<!-- ALERT ROW -->
+  <div class="row-at wid-mob">
+  	<div uib-alert type="info" ng-hide="ctr.selectedTime.time.startTime && ctr.overlayPage==0">{{ctr.scheduleAlert()}}</div> <!-- IF NO TIME HAS BEEN SELECTED OR CONFIRMED GIVE INSTRUCTIONS -->
+  	<div uib-alert type="info" ng-show="ctr.selectedTime.time.startTime && ctr.overlayPage==0">{{ctr.selectedTime.time.startTime | date: 'fullDate'}} from {{ctr.selectedTime.time.startTime | date: 'h:mm a'}} to {{ ctr.selectedTime.time.endTime | date: 'h:mm a'}}</div>
+  </div>
+
+  <!-- Tracking BUTTON -->
+  <button ng-show="ctr.overlayPage == 0 && ctr.order.deliveryTimeWindow" class="btn btn-primary btn-lg btn-ct wid-mob" ui-sref="tracking({'id': ctr.order._id})">Tracking</button>
+  <!-- Continue BUTTON -->
+  <button ng-disabled="!ctr.selectedTime.time.startTime" ng-show="ctr.overlayPage == 0" class="btn btn-success btn-lg btn-ct wid-mob" ng-click="ctr.overlayPage=1">Continue</button>
+	<!-- Return BUTTON -->
+	<button ng-show="ctr.overlayPage == 1" class="btn btn-primary btn-lg btn-ct wid-mob" ng-click="ctr.overlayPage=0">Return</button>
+	<!-- Submit BUTTON -->
+	<button ng-disabled="!ctr.delivData.terms" ng-show="ctr.overlayPage == 1" class="btn btn-success btn-lg btn-ct wid-mob" ng-click="ctr.confirm()">Confirm</button>
+
+  <!-- FOOTER PADDING -->
+  <div class="footer"></div>
+
+</div>

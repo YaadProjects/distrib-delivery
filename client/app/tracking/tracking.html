@@ -1,0 +1,102 @@
+<div class="container">
+  <h1 class="text-center" style="font-weight: bold; margin-top: 0; margin-bottom: 0px;">
+  Delivery tracking
+  </h1>
+  
+  <div class="checkout-wrap">
+    <ul class="checkout-bar">
+
+      <li ng-class="{'active': order.status === listStatus[0], 'visited': listStatus.indexOf(order.status) > 0}">
+        <a href="#" ng-class="{'green': order.status === listStatus[0], 'blue': listStatus.indexOf(order.status) > 0}">
+          {{actualStatus[0]}} <span class="glyphicon glyphicon-credit-card"></span>
+        </a>
+      </li>
+      
+      <li ng-class="{'active': order.status === listStatus[1], 'visited': listStatus.indexOf(order.status) > 1}">
+        <a href="#" ng-class="{'green': order.status === listStatus[1], 'blue': listStatus.indexOf(order.status) > 1}">
+          {{actualStatus[1]}} <span class="glyphicon glyphicon-gift"></span>
+        </a>
+      </li>
+      
+      <li ng-class="{'active': order.status === listStatus[2], 'visited': listStatus.indexOf(order.status) > 2}">
+        <a href="#" ng-class="{'green': order.status === listStatus[2], 'blue': listStatus.indexOf(order.status) > 2}">
+          {{actualStatus[2]}} <i class="fa fa-truck"></i>
+        </a>
+      </li>
+      
+      <li ng-class="{'active': order.status === listStatus[3], 'visited': listStatus.indexOf(order.status) > 3}">
+        <a href="#" ng-class="{'green': order.status === listStatus[3], 'blue': listStatus.indexOf(order.status) > 3}">
+          {{actualStatus[3]}} <span class="glyphicon glyphicon-road"></span>
+        </a>
+      </li>
+      
+      <li ng-class="{'active': order.status === listStatus[4]}">
+        <a href="#" ng-class="{'green': order.status === listStatus[4], 'blue': listStatus.indexOf(order.status) > 4}">
+          {{actualStatus[4]}} <span class="glyphicon glyphicon-ok"></span>
+        </a>
+      </li>
+         
+    </ul>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-body" style="font-size: small;">
+      <b>{{actualStatus[listStatus.indexOf(order.status)]}}</b><br><br>
+      {{tooltip[listStatus.indexOf(order.status)]}}
+      <p ng-show="!order.scheduled"><br>You are unscheduled for a delivery, please schedule a delivery so we may proceed with your delivery</p>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-body" style="font-size: small;">
+      <p ng-show="!order.scheduled">You are not scheduled for a delivery! Please schedule at your earliest convenience to receive your order.</p>
+      <p ng-show="order.scheduled">Thank you for scheduling a delivery. We will see you on {{order.deliveryTimeStart | date: 'fullDate'}} between {{order.deliveryTimeStart | date: 'h:mm a'}} and {{order.deliveryTimeEnd | date: 'h:mm a'}}</p>
+    </div>
+    <div class="panel-footer" ng-show="listStatus.indexOf(order.status) < 2">
+      <button ng-show="!order.scheduled" ui-sref="scheduling({id: order._id})" class="btn btn-primary btn-ct">Schedule</button>
+      <button ng-show="order.scheduled" ng-click="ctr.cancelDeliv()" class="btn btn-warning btn-ct">Cancel</button>
+      <button ng-show="order.scheduled" ui-sref="scheduling({id: order._id})" class="btn btn-primary btn-ct">Reschedule</button>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">Order Info</div>
+    <ul class="list-group" style="font-weight: normal; font-size: small;">
+      <li class="list-group-item">
+        <b>Customer Name:</b> {{order.customerName}}
+      </li>
+      <li class="list-group-item">
+        <b>Order Number: </b>{{order.orderID}}
+      </li>
+      <li class="list-group-item">
+        <b>Tracking Number: </b>{{order._id}}
+      </li>
+      <li class="list-group-item">
+        <b>Address:</b> {{order.address.address1}}, {{order.address.city}}, {{order.address.postal}}
+      </li>
+    </ul> 
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">Order Items</div>
+    <table class="table table-bordered" style="font-weight: normal; background-color: white; font-size: small;">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>SKU</th>
+          <th>Price</th>
+          <th>Quantity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="item in order.orderInfo.line_items">
+          <td>{{item.name}}</td>
+          <td>{{item.sku}}</td>
+          <td>${{item.price}}</td>
+          <td>{{item.quantity}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
