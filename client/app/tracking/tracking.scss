@@ -31,12 +31,30 @@ background-image: -moz-linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, tran
   }
 }
 
+.pills {
+  border-bottom-color: #1b0909;
+}
+
 .green {
   color: #8bc53f !important;
 }
 
 .blue {
   color: #57aed1 !important;
+}
+
+.info {
+  text-align: center;
+  margin: 0px;
+  border-radius: 0px;
+}
+
+.nav-pills > li > a {
+    border-radius: 0px;
+}
+
+button {
+  margin: 0px !important;
 }
 
 h1 {

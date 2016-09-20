@@ -7,6 +7,13 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
  * App-wide Styles
  */
 
+html{
+  height: 100%;
+}
+body {
+  min-height: 100%;
+}
+
 .browserupgrade {
   margin: 0.2em 0;
   background: #ccc;
