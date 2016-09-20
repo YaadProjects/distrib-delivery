@@ -27,7 +27,7 @@ class TrackComponent {
   }
 
   checkOrder() {
-    this.$http.get('https://server-distrib.rhcloud/api/orders/' + this.trackingNumber)
+    this.$http.get('https://server-distrib.rhcloud.com/api/orders/' + this.trackingNumber)
     .then(res => {
       if(res.data) {
         this.$state.go('tracking', {id: this.trackingNumber});

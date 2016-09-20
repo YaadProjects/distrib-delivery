@@ -23,7 +23,7 @@ class TrackingComponent {
 
 	// get the order from api
 	getOrder() {
-		this.$http.get('https://server-distrib.rhcloud/api/orders/' + this.trackingNumber)
+		this.$http.get('https://server-distrib.rhcloud.com/api/orders/' + this.trackingNumber)
 			.then(response => {
 				this.$scope.order = response.data;
 				console.log(this.$scope.order);
