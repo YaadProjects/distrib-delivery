@@ -7,7 +7,7 @@ class TrackComponent {
     this.$state = $state;
     this.$http = $http;
     this.$stateParams = $stateParams;
-    this.trackingNumber;
+    this.trackingNumber = undefined;
     this.alerts = [
     ];
     if ($stateParams.id) {

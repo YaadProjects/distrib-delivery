@@ -31,6 +31,22 @@ background-image: -moz-linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, tran
   }
 }
 
+.btn-track { /* continue/submit/back button */
+  min-width: 150px;
+  margin: 0px 10px;
+}
+
+.tracking-page {
+  height: 100vh;
+  padding: 0px;
+  margin: 0px;
+}
+
+.tracking-header {
+  padding: 0px;
+  margin: 0px;
+}
+
 .pills {
   border-bottom-color: #1b0909;
 }

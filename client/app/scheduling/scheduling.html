@@ -17,7 +17,7 @@
 
     <!-- CHOOSE DATE BUTTONS -->
     <div class="row-dt wid-mob"> 
-      <label ng-repeat="(day, times) in ctr.schedData" class="btn btn-default btn-lg btn-dt" ng-model="ctr.selectedTime.date" uib-btn-radio="day">
+      <label ng-repeat="(day, times) in ctr.schedData" class="btn btn-default btn-lg btn-dt" ng-if="times.Morning || times.Afternoon || times.Evening" ng-model="ctr.selectedTime.date" uib-btn-radio="day">
       <b>
       {{(times.Morning[0].startTime | date : 'EEEE') || (times.Afternoon[0].startTime | date : 'EEEE') || (times.Evening[0].startTime | date : 'EEEE')}}
       <br>

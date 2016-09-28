@@ -5,15 +5,11 @@
   class MainController {
 
     constructor($http) {
+      console.log('hello');
       this.$http = $http;
-      this.awesomeThings = [];
     }
 
     $onInit() {
-      this.$http.get('/api/things')
-        .then(response => {
-          this.awesomeThings = response.data;
-        });
     }
   }
 
