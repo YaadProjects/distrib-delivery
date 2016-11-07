@@ -11,14 +11,14 @@ class TrackingComponent {
 		this.id = $stateParams.id;
 		this.email = $stateParams.email;
 		$scope.order; 
-		$scope.listStatus = ['purchased', 'picked-up', 'out-for-delivery', 'in-transit', 'delivered'];
-		$scope.actualStatus = ['Accepted', 'Picked up', 'On the way', 'In Transit', 'Delivered'];
+		$scope.listStatus = ['created', 'verified', 'assigned', 'in-transit', 'delivered'];
+		$scope.actualStatus = ['Created', 'Verified', 'Assigned', 'In Transit', 'Delivered'];
 		$scope.tooltip = 
-		['Your order has been purchased and is waiting for processing.',
-		'The store has processed and packaged your order and it is awaiting pickup by a Kuro Delivery driver.',
-		'A driver has picked up your package and has left for their delivery route.',
-		'Your driver is headed directly to your location with your order.',
-		'Delivery successful, thank you!'
+		['Your order has been created and is pending verification by the store.',
+		'Your order has been verified by the store and is waiting to be assigned to a driver.',
+		'Your order has been assigned to a driver and is waiting to be picked up.',
+		'Your order has been picked up and is en route.' ,
+		'Your order has been successfully delivered, thank you!'
 		];
 		this.getOrder();
 	}
@@ -33,7 +33,7 @@ class TrackingComponent {
 		});
 	}
 
-	// function to cancel delivery
+	// function to schedule delivery
 	schedule() {
         this.$state.go('scheduling', {id: this.id, email: this.email});
 	}

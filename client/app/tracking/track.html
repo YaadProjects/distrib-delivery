@@ -9,7 +9,7 @@
           <div class="form-group">
             <input type="text" class="form-control" ng-model="ctr.email" placeholder="Order email">
           </div>
-          <button class="btn btn-primary" ng-disabled="ctr.id == undefined || ctr.email == undefined || ctr.id < 1" ng-click="ctr.checkOrder()">Track <i class="icon ion-paper-airplane"></i></button>
+          <button class="btn btn-primary" ng-disabled="ctr.id == undefined || ctr.email == undefined || ctr.id < 1" ng-click="ctr.checkOrder()">Track <i class="fa fa-paper-plane" aria-hidden="true"></i></button>
         </form>
       <div uib-alert ng-repeat="alert in ctr.alerts" class="'alert-' + (alert.type || 'warning')" close="ctr.closeAlert($index)" style="font-weight: normal">{{alert.msg}}</div>
     </div>

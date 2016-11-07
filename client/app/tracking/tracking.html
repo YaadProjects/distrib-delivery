@@ -8,31 +8,31 @@
       <ul class="checkout-bar">
         <li ng-class="{'active': order.status === listStatus[0], 'visited': listStatus.indexOf(order.status) > 0}">
           <a href="#" ng-class="{'green': order.status === listStatus[0], 'blue': listStatus.indexOf(order.status) > 0}">
-            {{actualStatus[0]}} <span class="glyphicon glyphicon-credit-card"></span>
+            {{actualStatus[0]}} <i class="fa fa-gift" aria-hidden="true"></i>
           </a>
         </li>
 
         <li ng-class="{'active': order.status === listStatus[1], 'visited': listStatus.indexOf(order.status) > 1}">
           <a href="#" ng-class="{'green': order.status === listStatus[1], 'blue': listStatus.indexOf(order.status) > 1}">
-            {{actualStatus[1]}} <span class="glyphicon glyphicon-gift"></span>
+            {{actualStatus[1]}} <i class="fa fa-check" aria-hidden="true"></i>
           </a>
         </li>
         
         <li ng-class="{'active': order.status === listStatus[2], 'visited': listStatus.indexOf(order.status) > 2}">
           <a href="#" ng-class="{'green': order.status === listStatus[2], 'blue': listStatus.indexOf(order.status) > 2}">
-            {{actualStatus[2]}} <i class="fa fa-truck"></i>
+            {{actualStatus[2]}} <i class="fa fa-user" aria-hidden="true"></i>
           </a>
         </li>
         
         <li ng-class="{'active': order.status === listStatus[3], 'visited': listStatus.indexOf(order.status) > 3}">
           <a href="#" ng-class="{'green': order.status === listStatus[3], 'blue': listStatus.indexOf(order.status) > 3}">
-            {{actualStatus[3]}} <span class="glyphicon glyphicon-road"></span>
+            {{actualStatus[3]}} <i class="fa fa-truck" aria-hidden="true"></i>
           </a>
         </li>
 
         <li ng-class="{'active': order.status === listStatus[4]}">
           <a href="#" ng-class="{'green': order.status === listStatus[4], 'blue': listStatus.indexOf(order.status) > 4}">
-            {{actualStatus[4]}} <span class="glyphicon glyphicon-ok"></span>
+            {{actualStatus[4]}} <i class="fa fa-home" aria-hidden="true"></i>
           </a>
         </li>
       </ul>
