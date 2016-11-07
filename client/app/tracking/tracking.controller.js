@@ -8,7 +8,8 @@ class TrackingComponent {
 		this.$scope = $scope;
 		this.$state = $state;
 		this.apiUrl = 'https://server-distrib.rhcloud.com/api/';
-		this.trackingNumber = $stateParams.id;
+		this.id = $stateParams.id;
+		this.email = $stateParams.email;
 		$scope.order; 
 		$scope.listStatus = ['purchased', 'picked-up', 'out-for-delivery', 'in-transit', 'delivered'];
 		$scope.actualStatus = ['Accepted', 'Picked up', 'On the way', 'In Transit', 'Delivered'];
@@ -24,17 +25,22 @@ class TrackingComponent {
 
 	// get the order from api
 	getOrder() {
-		this.$http.get(this.apiUrl+'orders/'+this.trackingNumber)
-			.then(response => {
-				this.$scope.order = response.data;
-			}, err => {
-				window.alert('Error fetching data for order #' + this.trackingNumber);
-			});
+		this.$http.get(this.apiUrl + 'orders/' + this.id + '/' + this.email)
+		.then(response => {
+			this.$scope.order = response.data;
+		}, err => {
+			window.alert('Error fetching data for order #' + this.id);
+		});
+	}
+
+	// function to cancel delivery
+	schedule() {
+        this.$state.go('scheduling', {id: this.id, email: this.email});
 	}
 
 	// function to cancel delivery
 	cancelDeliv() {
-		this.$http.patch(this.apiUrl+'orders/'+this.trackingNumber+'/deliveryInfo', { deliveryTimeWindow: null })
+		this.$http.patch(this.apiUrl + 'orders/' + this.id + '/deliveryInfo/' + this.email, { deliveryTimeWindow: null })
 		.then((data, status) => {
 			this.getOrder();
 		}, function(err) {

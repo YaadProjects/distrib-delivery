@@ -4,9 +4,8 @@
 
   class MainController {
 
-    constructor($http) {
-      console.log('hello');
-      this.$http = $http;
+    constructor($http, $window) {
+      $window.location.href = 'http://distrib.ca';
     }
 
     $onInit() {

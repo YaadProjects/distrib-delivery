@@ -36,32 +36,32 @@ class SchedulingComponent {
       smsNum: undefined,
       note: undefined
     };
-    if ($stateParams.id) {
-      this.getOrder($stateParams.id);
+    if ($stateParams.id && $stateParams.email) {
+      this.getOrder();
     }
     if ($stateParams.store) {
-      this.getStore($stateParams.store);
+      this.getStore();
     }
   }
 
-  getOrder(id) {
-    this.$q.all([this.$http.get(this.apiUrl+'orders/' + id), // get order
+  getOrder(id, email) {
+    this.$q.all([this.$http.get(this.apiUrl+'orders/' + this.$stateParams.id + '/' + this.$stateParams.email), // get order
     this.$http.get(this.apiUrl+'deliveryTimeWindows/serverTime')]) // get server time
     .then(res => {
       if (res[0].data) {
         this.order = res[0].data;
         this.parseTimes(res[1].data.time); // parse store times with server time 
       } else { // if order doesnt exist then alert
-        window.alert('Invalid tracking number, cannot schedule');
+        window.alert('No data for order #' + id);
       }
     }, err => {
-      window.alert('Error fetching data for order #' + id);
+      window.alert('Could not find order #' + id);
     });
   }
 
-  getStore(store) {
+  getStore() {
     this.store = true;
-    this.$q.all([this.$http.get(this.apiUrl+'stores/' + store), // get order
+    this.$q.all([this.$http.get(this.apiUrl+'stores/' + this.$stateParams.store), // get order
     this.$http.get(this.apiUrl+'deliveryTimeWindows/serverTime')]) // get server time
     .then(res => {
       if (res[0].data) {
@@ -71,7 +71,7 @@ class SchedulingComponent {
         window.alert('Invalid tracking number, cannot schedule');
       }
     }, err => {
-      window.alert('Error fetching data for store #' + store);
+      window.alert('Error fetching data for store #' + this.$stateParams.store);
     });
   }
 
@@ -116,9 +116,9 @@ class SchedulingComponent {
     if (this.store === true) {
       return;
     }
-    this.$http.patch(this.apiUrl+'orders/'+this.order._id+'/deliveryInfo', {deliveryTimeWindow : this.selectedTime.time, deliveryOptions: this.delivData})
+    this.$http.patch(this.apiUrl+'orders/'+this.order._id+'/deliveryInfo/'+this.order.email, {deliveryTimeWindow : this.selectedTime.time, deliveryOptions: this.delivData})
     .then((data, status) => {
-      this.$state.go('tracking', {'id': this.order._id});
+      this.$state.go('tracking', {'id': this.order._id, 'email': this.order.email});
     }, err => {
       window.alert("Couldn't schedule delivery, please refresh the page!"); // problem with fetching from server
     });

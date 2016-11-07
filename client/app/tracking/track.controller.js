@@ -7,19 +7,22 @@ class TrackComponent {
     this.$state = $state;
     this.$http = $http;
     this.$stateParams = $stateParams;
-    this.trackingNumber = undefined;
+    this.apiUrl = 'https://server-distrib.rhcloud.com/api/';
+    this.id = undefined;
+    this.email = undefined;
     this.alerts = [
     ];
-    if ($stateParams.id) {
-      this.trackingNumber = $stateParams.id;
+    if ($stateParams.id && $stateParams.email) {
+      this.id = $stateParams.id;
+      this.email = $stateParams.email;
     }
   }
 
 	$onInit() {
   }
 
-  addAlert(number) {
-    this.alerts.push({type: 'warning', msg: 'Could not find order number ' + number + '.'});
+  addAlert(number, email) {
+    this.alerts.push({type: 'warning', msg: 'Could not find order number ' + number + ' with email ' + email});
   }
 
   closeAlert(index) {
@@ -27,17 +30,19 @@ class TrackComponent {
   }
 
   checkOrder() {
-    this.$http.get('https://server-distrib.rhcloud.com/api/orders/' + this.trackingNumber)
+    this.$http.get(this.apiUrl + 'orders/' + this.id + '/' + this.email)
     .then(res => {
       if(res.data) {
-        this.$state.go('tracking', {id: this.trackingNumber});
+        this.$state.go('tracking', {id: this.id, email: this.email});
       } else {
-        this.addAlert(this.trackingNumber);
-        this.trackingNumber = undefined;
+        this.addAlert(this.id, this.email);
+        this.id = undefined;
+        this.email = undefined;
       }
     }, err => {
-      this.addAlert(this.trackingNumber);
-      this.trackingNumber = undefined;
+      this.addAlert(this.id, this.email);
+      this.id = undefined;
+      this.email = undefined;
     });
   }
 }

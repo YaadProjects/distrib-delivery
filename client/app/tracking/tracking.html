@@ -45,9 +45,9 @@
       {{tooltip[listStatus.indexOf(order.status)]}}<br><br>
       <p ng-show="!order.deliveryTimeWindow"><b style="color: red;">You are not scheduled for a delivery!</b> Please schedule at your earliest convenience to receive your order.</p>
       <p ng-show="order.deliveryTimeWindow">We will see you on <b>{{order.deliveryTimeWindow.startTime | date: 'fullDate'}}</b> between <b>{{order.deliveryTimeWindow.startTime | date: 'h:mm a'}}</b> and <b>{{order.deliveryTimeWindow.endTime | date: 'h:mm a'}}</b></p>
-      <button ng-show="!order.deliveryTimeWindow" ui-sref="scheduling({id: order._id})" class="btn btn-primary btn-track">Schedule</button>
+      <button ng-show="!order.deliveryTimeWindow" ng-click="ctr.schedule()" class="btn btn-primary btn-track">Schedule</button>
       <button ng-show="order.deliveryTimeWindow" ng-click="ctr.cancelDeliv()" class="btn btn-warning btn-track">Cancel</button>
-      <button ng-show="order.deliveryTimeWindow" ui-sref="scheduling({id: order._id})" class="btn btn-primary btn-track">Reschedule</button>
+      <button ng-show="order.deliveryTimeWindow" ng-click="ctr.schedule()" class="btn btn-primary btn-track">Reschedule</button>
     </div>
   </div>
 
