@@ -96,7 +96,7 @@
   </div>
 
   <!-- Tracking BUTTON -->
-  <button ng-show="ctr.overlayPage == 0 && ctr.order.deliveryTimeWindow" class="btn btn-primary btn-lg btn-ct wid-mob" ui-sref="tracking({'id': ctr.order._id})">Tracking</button>
+  <button ng-show="ctr.overlayPage == 0 && ctr.order.deliveryTimeWindow" class="btn btn-primary btn-lg btn-ct wid-mob" ui-sref="tracking({'id': ctr.order._id, 'email': ctr.order.email})">Tracking</button>
   <!-- Continue BUTTON -->
   <button ng-disabled="!ctr.selectedTime.time.startTime" ng-show="ctr.overlayPage == 0" class="btn btn-success btn-lg btn-ct wid-mob" ng-click="ctr.overlayPage=1">Continue</button>
 	<!-- Return BUTTON -->
